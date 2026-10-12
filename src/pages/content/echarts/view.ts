@@ -1,14 +1,8 @@
+import { DIAGRAM_TOOLBAR_BUTTON_CSS, setDiagramToolbarButton } from '@/core/ui/diagramToolbar';
+
 import { provideEChartsDataUrl } from './exportBridge';
 import type { createEChartsFullscreen } from './fullscreen';
 import { CHART_HEIGHT, PANEL_BG, type createEChartsRenderer } from './renderer';
-
-const t = (key: string, fallback: string): string => {
-  try {
-    return chrome.i18n?.getMessage(key) || fallback;
-  } catch {
-    return fallback;
-  }
-};
 
 interface NativeControlPlacement {
   parent: Node | null;
@@ -96,7 +90,8 @@ export function createEChartsView(
     }
 
     .gv-echarts-toggle button {
-      padding: 4px 10px;
+      ${DIAGRAM_TOOLBAR_BUTTON_CSS}
+      padding: 5px 7px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
@@ -227,22 +222,19 @@ export function createEChartsView(
       moveNativeCopyButton(codeBlockHost, toggleContainer);
 
       const diagramBtn = document.createElement('button');
-      diagramBtn.textContent = t('echartsDiagramButton', '📊 Diagram');
+      setDiagramToolbarButton(diagramBtn, 'echarts');
       diagramBtn.className = 'active';
       diagramBtn.dataset.view = 'diagram';
       diagramBtn.setAttribute('aria-pressed', 'true');
 
       const codeBtn = document.createElement('button');
-      codeBtn.textContent = t('echartsCodeButton', '</> Code');
+      setDiagramToolbarButton(codeBtn, 'code');
       codeBtn.dataset.view = 'code';
       codeBtn.setAttribute('aria-pressed', 'false');
 
       const fullscreenBtn = document.createElement('button');
-      fullscreenBtn.textContent = '⛶';
+      setDiagramToolbarButton(fullscreenBtn, 'fullscreen');
       fullscreenBtn.dataset.action = 'fullscreen';
-      const fullscreenLabel = t('echartsFullscreenButton', 'Fullscreen');
-      fullscreenBtn.title = fullscreenLabel;
-      fullscreenBtn.setAttribute('aria-label', fullscreenLabel);
 
       toggleContainer.append(diagramBtn, codeBtn, fullscreenBtn);
       wrapper.insertBefore(toggleContainer, codeBlockHost);

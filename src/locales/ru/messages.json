@@ -962,22 +962,6 @@
     "message": "Изменить можно в любое время во всплывающем окне расширения → Параметры папок.",
     "description": "Footnote explaining where to toggle the setting later"
   },
-  "floatingModeNudgeTitle": {
-    "message": "Боковая панель недоступна — открыть папки в плавающем окне?",
-    "description": "Title of the floating-mode fallback nudge"
-  },
-  "floatingModeNudgeBody": {
-    "message": "Voyager не смог найти боковую панель Gemini, возможно, из-за изменения макета страницы. Папки по-прежнему доступны в плавающем окне.",
-    "description": "Body copy of the floating-mode fallback nudge"
-  },
-  "floatingModeNudgeEnable": {
-    "message": "Открыть плавающее окно",
-    "description": "Primary button that opens the floating folder panel"
-  },
-  "floatingModeNudgeDismiss": {
-    "message": "Не сейчас",
-    "description": "Secondary button that dismisses the floating-mode nudge"
-  },
   "floatingPanelTitle": {
     "message": "Папки",
     "description": "Title shown in the floating folder panel header"
@@ -1454,6 +1438,10 @@
     "message": "Ветки диалогов",
     "description": "Drive restore part: conversation fork links"
   },
+  "syncRestoreCatalogTimeline": {
+    "message": "Избранное и уровни таймлайна на других сайтах",
+    "description": "Drive restore part: timeline stars and node levels saved on catalog sites such as ChatGPT and Claude"
+  },
   "syncRestoreListSeparator": {
     "message": ", ",
     "description": "Separator between restored or failed part names in the partial-restore message"
@@ -1785,14 +1773,6 @@
     "message": "Автоматически отображает блоки кода WaveJSON в виде интерактивных временных диаграмм",
     "description": "Описание функции WaveDrom"
   },
-  "wavedromDiagramButton": {
-    "message": "〜 Диаграмма",
-    "description": "Подпись кнопки показа диаграммы"
-  },
-  "wavedromCodeButton": {
-    "message": "</> Код",
-    "description": "Подпись кнопки показа исходного кода WaveJSON"
-  },
   "wavedromZoomIn": {
     "message": "Приблизить",
     "description": "Панель полноэкранного режима: кнопка приближения"
@@ -1821,13 +1801,13 @@
     "message": "Автоматически отображать блоки кода с опциями ECharts в виде интерактивных графиков",
     "description": "ECharts rendering feature hint"
   },
-  "echartsDiagramButton": {
-    "message": "📊 График",
-    "description": "Toggle button label to show the rendered chart"
+  "diagramButton": {
+    "message": "Диаграмма",
+    "description": "Diagram toolbar button that shows the rendered diagram (Mermaid, ECharts or WaveDrom)"
   },
-  "echartsCodeButton": {
-    "message": "</> Код",
-    "description": "Toggle button label to show the ECharts option source"
+  "diagramCodeButton": {
+    "message": "Код",
+    "description": "Diagram toolbar button that shows the diagram source code"
   },
   "echartsFullscreenButton": {
     "message": "На весь экран",

@@ -962,22 +962,6 @@
     "message": "Você pode alterar isso a qualquer momento no popup da extensão → Opções de pastas.",
     "description": "Footnote explaining where to toggle the setting later"
   },
-  "floatingModeNudgeTitle": {
-    "message": "Barra lateral indisponível — abrir as pastas em uma janela flutuante?",
-    "description": "Title of the floating-mode fallback nudge"
-  },
-  "floatingModeNudgeBody": {
-    "message": "O Voyager não encontrou a barra lateral do Gemini, provavelmente devido a uma mudança no layout da página. Você ainda pode navegar pelas pastas em uma janela flutuante.",
-    "description": "Body copy of the floating-mode fallback nudge"
-  },
-  "floatingModeNudgeEnable": {
-    "message": "Abrir janela flutuante",
-    "description": "Primary button that opens the floating folder panel"
-  },
-  "floatingModeNudgeDismiss": {
-    "message": "Agora não",
-    "description": "Secondary button that dismisses the floating-mode nudge"
-  },
   "floatingPanelTitle": {
     "message": "Pastas",
     "description": "Title shown in the floating folder panel header"
@@ -1454,6 +1438,10 @@
     "message": "Ramificações de conversa",
     "description": "Drive restore part: conversation fork links"
   },
+  "syncRestoreCatalogTimeline": {
+    "message": "Favoritos e níveis da linha do tempo em outros sites",
+    "description": "Drive restore part: timeline stars and node levels saved on catalog sites such as ChatGPT and Claude"
+  },
   "syncRestoreListSeparator": {
     "message": ", ",
     "description": "Separator between restored or failed part names in the partial-restore message"
@@ -1785,14 +1773,6 @@
     "message": "Renderiza automaticamente blocos de código WaveJSON como diagramas de temporização interativos",
     "description": "Descrição do recurso WaveDrom"
   },
-  "wavedromDiagramButton": {
-    "message": "〜 Diagrama",
-    "description": "Rótulo do botão para mostrar o diagrama renderizado"
-  },
-  "wavedromCodeButton": {
-    "message": "</> Código",
-    "description": "Rótulo do botão para mostrar o código-fonte WaveJSON"
-  },
   "wavedromZoomIn": {
     "message": "Ampliar",
     "description": "Barra de ferramentas em tela cheia: título do botão de ampliar"
@@ -1821,13 +1801,13 @@
     "message": "Renderizar automaticamente blocos de código de opções do ECharts como gráficos interativos",
     "description": "ECharts rendering feature hint"
   },
-  "echartsDiagramButton": {
-    "message": "📊 Gráfico",
-    "description": "Toggle button label to show the rendered chart"
+  "diagramButton": {
+    "message": "Diagrama",
+    "description": "Diagram toolbar button that shows the rendered diagram (Mermaid, ECharts or WaveDrom)"
   },
-  "echartsCodeButton": {
-    "message": "</> Código",
-    "description": "Toggle button label to show the ECharts option source"
+  "diagramCodeButton": {
+    "message": "Código",
+    "description": "Diagram toolbar button that shows the diagram source code"
   },
   "echartsFullscreenButton": {
     "message": "Tela cheia",

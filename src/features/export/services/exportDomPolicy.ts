@@ -41,6 +41,8 @@ export function shouldSkipElement(element: Element): boolean {
     element.classList.contains('nanobanana-indicator') ||
     // Generated image overlay controls (share/copy/download buttons)
     element.classList.contains('generated-image-controls') ||
+    // A plugin's drawn diagram: its host code block, kept in the page, exports the source.
+    element.classList.contains('gv-diagram-panel') ||
     (element.classList.contains('hide-from-message-actions') &&
       !element.matches('.image-container, single-image, generated-image') &&
       !element.querySelector('img.hero-image, img.spark-licensed-portrait, img.image'))
@@ -50,6 +52,9 @@ export function shouldSkipElement(element: Element): boolean {
 
   return false;
 }
+
+/** Set by the code-block diagram plugins (`verbs/codeBlockDiagram.ts`) on a block they hide. */
+const DIAGRAM_HIDDEN_ATTR = 'data-gv-diagram-hidden';
 
 export function stripExportArtifacts(root: HTMLElement): void {
   const selector = [
@@ -76,6 +81,7 @@ export function stripExportArtifacts(root: HTMLElement): void {
     '.nanobanana-indicator',
     '.generated-image-controls',
     '.hide-from-message-actions',
+    '.gv-diagram-panel',
   ].join(',');
 
   root.querySelectorAll(selector).forEach((el) => {
@@ -85,6 +91,10 @@ export function stripExportArtifacts(root: HTMLElement): void {
     if (el.localName === 'style' && el.closest('.gv-wavedrom-wrapper')) return;
     el.remove();
   });
+  // Image export renders the clone in the page, where a diagram plugin's hiding CSS still applies.
+  for (const el of [root, ...Array.from(root.querySelectorAll(`[${DIAGRAM_HIDDEN_ATTR}]`))]) {
+    el.removeAttribute(DIAGRAM_HIDDEN_ATTR);
+  }
 }
 
 /**

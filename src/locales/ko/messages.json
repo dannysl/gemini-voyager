@@ -962,22 +962,6 @@
     "message": "확장 프로그램 팝업 → 폴더 옵션에서 언제든 변경할 수 있습니다.",
     "description": "Footnote explaining where to toggle the setting later"
   },
-  "floatingModeNudgeTitle": {
-    "message": "사이드바를 찾을 수 없음 — 폴더를 플로팅 창으로 열까요?",
-    "description": "Title of the floating-mode fallback nudge"
-  },
-  "floatingModeNudgeBody": {
-    "message": "Voyager가 Gemini 사이드바를 찾지 못했습니다. 페이지 레이아웃이 변경되었을 수 있습니다. 플로팅 창에서 폴더를 계속 탐색할 수 있습니다.",
-    "description": "Body copy of the floating-mode fallback nudge"
-  },
-  "floatingModeNudgeEnable": {
-    "message": "플로팅 창 열기",
-    "description": "Primary button that opens the floating folder panel"
-  },
-  "floatingModeNudgeDismiss": {
-    "message": "나중에",
-    "description": "Secondary button that dismisses the floating-mode nudge"
-  },
   "floatingPanelTitle": {
     "message": "폴더",
     "description": "Title shown in the floating folder panel header"
@@ -1454,6 +1438,10 @@
     "message": "대화 분기",
     "description": "Drive restore part: conversation fork links"
   },
+  "syncRestoreCatalogTimeline": {
+    "message": "다른 사이트의 타임라인 별표와 레벨",
+    "description": "Drive restore part: timeline stars and node levels saved on catalog sites such as ChatGPT and Claude"
+  },
   "syncRestoreListSeparator": {
     "message": ", ",
     "description": "Separator between restored or failed part names in the partial-restore message"
@@ -1785,14 +1773,6 @@
     "message": "코드 블록의 WaveJSON을 대화형 타이밍 다이어그램으로 자동 렌더링합니다",
     "description": "WaveDrom 기능 설명"
   },
-  "wavedromDiagramButton": {
-    "message": "〜 다이어그램",
-    "description": "렌더링된 다이어그램으로 전환하는 버튼 라벨"
-  },
-  "wavedromCodeButton": {
-    "message": "</> 코드",
-    "description": "WaveJSON 소스로 전환하는 버튼 라벨"
-  },
   "wavedromZoomIn": {
     "message": "확대",
     "description": "전체화면 툴바: 확대 버튼 제목"
@@ -1821,13 +1801,13 @@
     "message": "ECharts 옵션 코드 블록을 대화형 차트로 자동 렌더링",
     "description": "ECharts rendering feature hint"
   },
-  "echartsDiagramButton": {
-    "message": "📊 차트",
-    "description": "Toggle button label to show the rendered chart"
+  "diagramButton": {
+    "message": "다이어그램",
+    "description": "Diagram toolbar button that shows the rendered diagram (Mermaid, ECharts or WaveDrom)"
   },
-  "echartsCodeButton": {
-    "message": "</> 코드",
-    "description": "Toggle button label to show the ECharts option source"
+  "diagramCodeButton": {
+    "message": "코드",
+    "description": "Diagram toolbar button that shows the diagram source code"
   },
   "echartsFullscreenButton": {
     "message": "전체 화면",

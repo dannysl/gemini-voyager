@@ -1,4 +1,5 @@
 import { logger } from '@/core/services/LoggerService';
+import { DIAGRAM_TOOLBAR_BUTTON_CSS, setDiagramToolbarButton } from '@/core/ui/diagramToolbar';
 
 import { openFullscreen } from './fullscreen';
 import { type MermaidRenderer, sanitizeMermaidSvg } from './renderer';
@@ -19,12 +20,11 @@ export const createStyles = () => {
       position: relative;
     }
 
+    /* Sits above the diagram, not over it, like the ECharts and WaveDrom toolbars. */
     .gv-mermaid-toggle {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      z-index: 10;
       display: flex;
+      width: fit-content;
+      margin: 8px 8px 4px auto;
       align-items: center; /* Center items vertically */
       gap: 4px;
       background: var(--gemini-surface-container, rgba(0,0,0,0.05));
@@ -34,7 +34,8 @@ export const createStyles = () => {
     }
 
     .gv-mermaid-toggle button {
-      padding: 4px 10px;
+      ${DIAGRAM_TOOLBAR_BUTTON_CSS}
+      padding: 5px 7px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
@@ -148,7 +149,8 @@ export const createStyles = () => {
   document.head.appendChild(style);
 };
 
-function createMermaidErrorCard(errorMessage: string): HTMLElement {
+/** The card shown in place of a diagram whose source does not parse. */
+export function createMermaidErrorCard(errorMessage: string): HTMLElement {
   const card = document.createElement('div');
   card.style.cssText =
     'padding: 24px; text-align: center; color: var(--gemini-on-surface-variant, #666);';
@@ -170,7 +172,7 @@ function createMermaidErrorCard(errorMessage: string): HTMLElement {
   hint.style.cssText = 'margin-top: 12px; font-size: 13px;';
   hint.append('Click ');
   const codeLabel = document.createElement('b');
-  codeLabel.textContent = '"</> Code"';
+  codeLabel.textContent = '"Code"';
   hint.append(codeLabel, ' to view source');
 
   card.append(icon, title, details, hint);
@@ -207,17 +209,17 @@ function getOrCreateWrapper(codeBlockHost: HTMLElement): HTMLElement {
     }
 
     const diagramBtn = document.createElement('button');
-    diagramBtn.textContent = '📊 Diagram';
+    setDiagramToolbarButton(diagramBtn, 'mermaid');
     diagramBtn.className = 'active';
     diagramBtn.dataset.view = 'diagram';
 
     const codeBtn = document.createElement('button');
-    codeBtn.textContent = '</> Code';
+    setDiagramToolbarButton(codeBtn, 'code');
     codeBtn.dataset.view = 'code';
 
     toggleContainer.appendChild(diagramBtn);
     toggleContainer.appendChild(codeBtn);
-    wrapper.appendChild(toggleContainer);
+    wrapper.prepend(toggleContainer);
 
     // Diagram container
     const diagramContainer = document.createElement('div');

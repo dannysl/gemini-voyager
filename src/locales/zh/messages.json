@@ -962,22 +962,6 @@
     "message": "可在扩展弹窗 → 文件夹选项中关闭此功能。",
     "description": "Footnote explaining where to toggle the setting later"
   },
-  "floatingModeNudgeTitle": {
-    "message": "侧边栏不可用 — 在悬浮窗中打开文件夹？",
-    "description": "Title of the floating-mode fallback nudge"
-  },
-  "floatingModeNudgeBody": {
-    "message": "Voyager 未找到 Gemini 侧边栏，可能是页面布局发生了变化。你仍可以在悬浮窗中浏览文件夹。",
-    "description": "Body copy of the floating-mode fallback nudge"
-  },
-  "floatingModeNudgeEnable": {
-    "message": "打开悬浮窗",
-    "description": "Primary button that opens the floating folder panel"
-  },
-  "floatingModeNudgeDismiss": {
-    "message": "暂不",
-    "description": "Secondary button that dismisses the floating-mode nudge"
-  },
   "floatingPanelTitle": {
     "message": "文件夹",
     "description": "Title shown in the floating folder panel header"
@@ -1454,6 +1438,10 @@
     "message": "对话分叉",
     "description": "Drive restore part: conversation fork links"
   },
+  "syncRestoreCatalogTimeline": {
+    "message": "其他网站的时间线星标与层级",
+    "description": "Drive restore part: timeline stars and node levels saved on catalog sites such as ChatGPT and Claude"
+  },
   "syncRestoreListSeparator": {
     "message": "、",
     "description": "Separator between restored or failed part names in the partial-restore message"
@@ -1785,14 +1773,6 @@
     "message": "自动将代码块中的 WaveJSON 渲染为可交互的时序波形图",
     "description": "WaveDrom 渲染功能提示"
   },
-  "wavedromDiagramButton": {
-    "message": "〜 图示",
-    "description": "切换到已渲染图示的按钮标签"
-  },
-  "wavedromCodeButton": {
-    "message": "</> 代码",
-    "description": "切换到 WaveJSON 源码的按钮标签"
-  },
   "wavedromZoomIn": {
     "message": "放大",
     "description": "全屏工具栏：放大按钮标题"
@@ -1821,13 +1801,13 @@
     "message": "自动将 ECharts 配置代码块渲染为交互式图表",
     "description": "ECharts rendering feature hint"
   },
-  "echartsDiagramButton": {
-    "message": "📊 图表",
-    "description": "Toggle button label to show the rendered chart"
+  "diagramButton": {
+    "message": "图表",
+    "description": "Diagram toolbar button that shows the rendered diagram (Mermaid, ECharts or WaveDrom)"
   },
-  "echartsCodeButton": {
-    "message": "</> 代码",
-    "description": "Toggle button label to show the ECharts option source"
+  "diagramCodeButton": {
+    "message": "代码",
+    "description": "Diagram toolbar button that shows the diagram source code"
   },
   "echartsFullscreenButton": {
     "message": "全屏",

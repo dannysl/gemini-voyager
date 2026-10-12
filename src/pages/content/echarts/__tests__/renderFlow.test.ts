@@ -57,14 +57,16 @@ describe('render flow', () => {
     expect(toggle).not.toBeNull();
     expect(wrapper.firstElementChild).toBe(toggle);
     expect(getComputedStyle(toggle).position).not.toBe('absolute');
-    expect(toggle.querySelector('[data-view="diagram"]')?.textContent).toContain('Diagram');
-    expect(toggle.querySelector('[data-view="code"]')?.textContent).toContain('Code');
+    expect(toggle.querySelector('[data-view="diagram"]')?.getAttribute('aria-label')).toBe(
+      'Diagram',
+    );
+    expect(toggle.querySelector('[data-view="code"]')?.getAttribute('aria-label')).toBe('Code');
     expect(toggle.querySelector('[data-view="diagram"]')?.getAttribute('aria-pressed')).toBe(
       'true',
     );
     expect(toggle.querySelector('[data-view="code"]')?.getAttribute('aria-pressed')).toBe('false');
     expect(toggle.querySelector('[data-action="fullscreen"]')?.getAttribute('aria-label')).toBe(
-      'echartsFullscreenButton',
+      'Fullscreen',
     );
     expect(wrapper.querySelector('.gv-echarts-diagram')).not.toBeNull();
     expect(codeEl.dataset.echartsCode).toBe(PIE_OPTION);

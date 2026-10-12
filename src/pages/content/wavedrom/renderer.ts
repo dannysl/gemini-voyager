@@ -1,3 +1,6 @@
+import type { DOMPurify } from 'dompurify';
+
+import { isGenericLanguageLabel } from '../codeBlock';
 import { resolveMermaidTheme } from '../mermaid/renderer';
 
 /** WaveDrom theme policy (mirrors AionUi's WaveThemeMode). */
@@ -72,6 +75,26 @@ interface WaveDromBundle {
   waveSkinDarkRemapped: WaveSkin;
 }
 
+let wavePurifier: DOMPurify | null = null;
+
+/**
+ * Sanitise WaveDrom's SVG while keeping its `<use>` bricks. WaveDrom draws every
+ * wave segment as `<use xlink:href="#pclk">`; DOMPurify drops `<use>` by default,
+ * which left lanes with labels but no waves. Only same-document `#` references
+ * survive, on a private DOMPurify instance so the hook never touches other sanitisers.
+ */
+export const sanitizeWaveSvg = (purify: DOMPurify, svg: string): string => {
+  if (!wavePurifier) {
+    wavePurifier = purify(window);
+    wavePurifier.addHook('afterSanitizeAttributes', (node) => {
+      if (node.nodeName.toLowerCase() !== 'use') return;
+      const href = node.getAttribute('xlink:href') ?? node.getAttribute('href') ?? '';
+      if (!href.startsWith('#')) node.remove();
+    });
+  }
+  return wavePurifier.sanitize(svg, { ADD_TAGS: ['use'] });
+};
+
 /**
  * Strip fixed pixel `width`/`height` attributes from an SVG root that already
  * carries a `viewBox`, then inject `width="100%" height="100%"` so the diagram
@@ -98,6 +121,22 @@ export const isWaveJsonCode = (code: string): boolean => {
   // Must look like a JSON object.
   if (!trimmed.startsWith('{')) return false;
   return true;
+};
+
+/**
+ * Whether a code block is WaveDrom, from its language label (lowercase, null
+ * when the block has none) and its source. Shared by Gemini and the `wavedrom`
+ * plugin primitive, so every site decides the same way.
+ */
+export const shouldRenderWaveDrom = (language: string | null, code: string): boolean => {
+  // Explicit WaveDrom labels always render.
+  if (language === 'wavedrom' || language === 'wavejson') return true;
+  // Specific language labels (json, typescript, …) skip WaveJSON detection:
+  // WaveJSON is a niche format, and ordinary JSON output must not be
+  // mistaken for a timing diagram.
+  if (language && !isGenericLanguageLabel(language)) return false;
+  // Content-based detection for unlabelled / generic blocks (Code snippet, 代码段, …).
+  return isWaveJsonCode(code);
 };
 
 export const resolveGeminiTheme = (doc: Document, prefersDark: boolean): 'light' | 'dark' =>
@@ -207,14 +246,17 @@ export const createWaveDromRenderer = () => {
       // The SVG markup is library-generated from parsed WaveJSON, but the markup
       // still crosses innerHTML twice (inline container + fullscreen overlay), so
       // sanitise once here. The bundled dark-skin <style> block survives DOMPurify.
-      const svgSanitized = DOMPurify.sanitize(svgRaw);
+      const svgSanitized = sanitizeWaveSvg(DOMPurify, svgRaw);
       return makeResponsiveSvg(svgSanitized);
     } catch {
       return null;
     }
   };
 
-  return { render };
+  /** Load the library ahead of the first render; false when it cannot load. */
+  const load = async (): Promise<boolean> => (await loadWaveDrom()) !== null;
+
+  return { render, load };
 };
 
 export type WaveDromRenderer = ReturnType<typeof createWaveDromRenderer>;

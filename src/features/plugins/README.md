@@ -125,8 +125,12 @@ An official plugin is authored as files under its platform's directory:
 1. Pick the site it belongs to. If that site has no `catalog/sites/<site>/`
    directory yet, write its `site.json` first (`id` equal to the directory name,
    `label`, `matches`, `selectors` keyed by the semantic vocabulary, `theme`,
-   `brandColor`, `capabilities`, optional `conversationIdPattern`). Nothing
-   registers it: the registry picks it up from the file.
+   `brandColor`, `capabilities`, optional `conversationIdPattern` and
+   `turnKeyAttributes`). Nothing registers it: the registry picks it up from the
+   file. `turnKeyAttributes` names the attributes that keep a user message's
+   identity across remounts; send tracking (`sends/trackUserSends.ts`, behind
+   folder Activity and catalog timeline timestamps) runs only on a site that
+   names them, its `composer` and `userTurn`, and a `conversationIdPattern`.
 2. Create `catalog/sites/<site>/plugins/<id>/` with `plugin.json`, `style.css`
    and a short `README.md`.
 3. Keep the plugin's `matches` inside the site's `matches` (D18).
@@ -319,13 +323,26 @@ Shipped primitives (`verbs/contracts.ts`): `formulaCopy` (since 1.3.0), `vimInpu
 `composer` param, defaults to the adapter's `composer` selector) and `turnNavigator` (since 1.4.0,
 `turn` / `conversationIdPattern` / `scrollContainer` / `yieldWhen` / `position`, all optional and
 defaulting to the adapter, plus the optional `conversationIdAttribute` attribute and `turnItem`
-selector since 1.5.0). The formula-copy,
+selector since 1.5.0) and `userLatex` (since 1.7.0, optional `turn` selector defaulting to the
+adapter's `userTurn`; renders the LaTeX a user typed with Gemini's renderer and restores the text on
+unmount) and the code-block diagram primitives `mermaid`, `echarts` and `wavedrom` (all since
+1.7.0, optional `turn` / `codeBlock` / `code` / `codeLine` / `language` selectors defaulting to
+the adapter's `assistantTurn` and `codeBlock`). Each is Gemini's renderer core plus the shared
+engine in `verbs/codeBlockDiagram.ts`, which draws a diagram in a shadow-root panel before the
+host's untouched code block; a label counts as a language only when it is shaped like an id, so a
+host's localized "plain text" label leaves the block to content detection. New diagram kinds follow
+the PATTERN note at the top of that file, and each site gets one `diagram-rendering` plugin listing
+its diagram ops: ChatGPT's lists `echarts` and `wavedrom`, since ChatGPT draws Mermaid itself, and
+`mermaid` waits for a site that needs it. The formula-copy,
 Vim, Claude-timeline and ChatGPT-timeline builtins are now manifests that invoke these primitives;
 the shared timeline engine lives in `../timeline/TimelineEngine.ts`. Its catalog adapter
 (`../timeline/adapters/catalog/`) accumulates markers across virtualized windows (`turnMerge.ts`)
 and keeps stars and hierarchy in per-site local keys, while stars remain available in Saved Library. Star ids come from the URL at
-each read or write (`conversationId.ts`); a site with a `conversationIdPattern` cannot star a route
-that does not match it. A star is written only for a turn proven to be the current conversation's:
+each read or write (`conversationId.ts`); a manifest's `conversationIdPattern` wins over the site
+adapter's. A mounted timeline publishes that namespace (`activeStarNamespace.ts`) so ChatGPT
+export's starred filter reads the same ids. A site with a `conversationIdPattern` cannot star a
+route that does not match it. Without a site adapter the timeline stays inert: its stars, outline
+and placement are keyed by the site id. A star is written only for a turn proven to be the current conversation's:
 the host's own id for it where the site names one (`conversationIdAttribute` on an ancestor, as
 Claude's `data-conv-id`, or inside the turn's `turnItem`; a turn without it is unstarrable), else
 the URL when the turn entered the page (`turnOwnership.ts`).
